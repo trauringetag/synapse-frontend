@@ -96,7 +96,6 @@ export default function Dashboard() {
       <div className="container">
         <div className="dashboard-header">
           <h2>Личный кабинет</h2>
-          <button onClick={handleLogout} className="btn btn-secondary">Выйти</button>
         </div>
         {error && <div className="alert alert-error">{error}</div>}
 
@@ -113,10 +112,6 @@ export default function Dashboard() {
             <div className="detail-row">
               <span className="detail-label">ID в системе</span>
               <span className="detail-value">#{currentUser.id}</span>
-            </div>
-            <div className="detail-row">
-              <span className="detail-label">Статус аккаунта</span>
-              <span className="detail-value" style={{ color: 'var(--color-success)' }}>Активен</span>
             </div>
           </div>
         </div>

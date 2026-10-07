@@ -13,10 +13,14 @@ export default function Login() {
     e.preventDefault();
     setError('');
     setLoading(true);
+    
     try {
       const res = await api.post('/auth/login', { email, password });
+      
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.role);
+      localStorage.setItem('userName', `${res.data.user.first_name}`);
+      
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.error || 'Ошибка входа');
