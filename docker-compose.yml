@@ -1,9 +1,10 @@
 services:
-  frontend:
-    build: .
+  app:
+    build:
+      context: .
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8080}
     container_name: synapse-frontend
     restart: always
     ports:
-      - "3000:80"
-    environment:
-      - VITE_API_URL=http://localhost:8080
+      - "5173:80"
