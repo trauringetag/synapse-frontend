@@ -3,12 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import api from '../api/client';
 
 export default function RegisterAdmin() {
-  const [form, setForm] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    password: ''
-  });
+  const [form, setForm] = useState({ first_name: '', last_name: '', email: '', password: '' });
   const [adminSecret, setAdminSecret] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -20,7 +15,6 @@ export default function RegisterAdmin() {
     setError('');
     setSuccess('');
     setLoading(true);
-
     try {
       await api.post('/auth/register-admin', form, {
         headers: { 'X-Admin-Secret': adminSecret }
@@ -34,67 +28,53 @@ export default function RegisterAdmin() {
     }
   };
 
-  const handleChange = (field) => (e) => {
-    setForm({ ...form, [field]: e.target.value });
-  };
+  const handleChange = (field) => (e) => setForm({ ...form, [field]: e.target.value });
 
   return (
-    <div className="form-container" style={{ border: '2px solid #f44336' }}>
-      <h2>Регистрация АДМИНИСТРАТОРА</h2>
-      {error && <div className="error">{error}</div>}
-      {success && <div className="success">{success}</div>}
+    <div className="card card-admin">
+      <div className="card-header">
+        <h2>Регистрация Администратора</h2>
+        <p>Требуется подтверждение секретным ключом</p>
+      </div>
+      
+      {error && <div className="alert alert-error">{error}</div>}
+      {success && <div className="alert alert-success">{success}</div>}
+      
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <input
-            placeholder="Секретный ключ администратора"
-            value={adminSecret}
-            onChange={(e) => setAdminSecret(e.target.value)}
-            required
-            style={{ borderColor: '#f44336' }}
+          <label className="form-label">Секретный ключ администратора</label>
+          <input 
+            className="input input-admin" 
+            value={adminSecret} 
+            onChange={(e) => setAdminSecret(e.target.value)} 
+            required 
+            placeholder="Введите ключ из .env" 
           />
         </div>
         <div className="form-group">
-          <input
-            placeholder="Имя"
-            value={form.first_name}
-            onChange={handleChange('first_name')}
-            required
-          />
+          <label className="form-label">Имя</label>
+          <input className="input" value={form.first_name} onChange={handleChange('first_name')} required placeholder="Админ" />
         </div>
         <div className="form-group">
-          <input
-            placeholder="Фамилия"
-            value={form.last_name}
-            onChange={handleChange('last_name')}
-            required
-          />
+          <label className="form-label">Фамилия</label>
+          <input className="input" value={form.last_name} onChange={handleChange('last_name')} required placeholder="Системы" />
         </div>
         <div className="form-group">
-          <input
-            type="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange('email')}
-            required
-          />
+          <label className="form-label">Email</label>
+          <input type="email" className="input" value={form.email} onChange={handleChange('email')} required placeholder="admin@example.com" />
         </div>
         <div className="form-group">
-          <input
-            type="password"
-            placeholder="Пароль (мин. 6 символов)"
-            value={form.password}
-            onChange={handleChange('password')}
-            required
-            minLength={6}
-          />
+          <label className="form-label">Пароль</label>
+          <input type="password" className="input" value={form.password} onChange={handleChange('password')} required minLength={8} placeholder="Минимум 8 символов" />
         </div>
-        <button type="submit" disabled={loading}>
+        <button type="submit" className="btn btn-primary" disabled={loading} style={{ backgroundColor: 'var(--color-admin)', borderColor: 'var(--color-admin)' }}>
           {loading ? 'Создание...' : 'Создать Администратора'}
         </button>
       </form>
-      <p style={{ marginTop: '20px', textAlign: 'center' }}>
-        <Link to="/login">← Вернуться ко входу</Link>
-      </p>
+      
+      <div className="text-center">
+        <Link to="/login" className="link">← Вернуться ко входу</Link>
+      </div>
     </div>
   );
 }

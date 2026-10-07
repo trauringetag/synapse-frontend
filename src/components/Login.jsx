@@ -13,7 +13,6 @@ export default function Login() {
     e.preventDefault();
     setError('');
     setLoading(true);
-
     try {
       const res = await api.post('/auth/login', { email, password });
       localStorage.setItem('token', res.data.token);
@@ -27,35 +26,45 @@ export default function Login() {
   };
 
   return (
-    <div className="form-container">
-      <h2>Вход в систему</h2>
-      {error && <div className="error">{error}</div>}
+    <div className="card">
+      <div className="card-header">
+        <h2>Вход в систему</h2>
+        <p>Введите свои данные для доступа к аккаунту</p>
+      </div>
+      
+      {error && <div className="alert alert-error">{error}</div>}
+      
       <form onSubmit={handleSubmit}>
         <div className="form-group">
+          <label className="form-label">Email</label>
           <input
             type="email"
-            placeholder="Email"
+            className="input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            placeholder="name@example.com"
           />
         </div>
         <div className="form-group">
+          <label className="form-label">Пароль</label>
           <input
             type="password"
-            placeholder="Пароль"
+            className="input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            placeholder="••••••••"
           />
         </div>
-        <button type="submit" disabled={loading}>
+        <button type="submit" className="btn btn-primary" disabled={loading}>
           {loading ? 'Вход...' : 'Войти'}
         </button>
       </form>
-      <p style={{ marginTop: '20px', textAlign: 'center' }}>
-        Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
-      </p>
+      
+      <div className="text-center">
+        Нет аккаунта? <Link to="/register" className="link">Зарегистрироваться</Link>
+      </div>
     </div>
   );
 }
