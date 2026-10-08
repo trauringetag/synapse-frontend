@@ -3,7 +3,7 @@ export default function Home() {
     <div className="home-container">
       <div className="home-content">
         <h1 className="home-title">
-          Добро пожаловать в <span className="text-primary">Synapse API</span>
+          Добро пожаловать в <span className="text-primary">Synapse</span>
         </h1>
         
         <p className="home-description">

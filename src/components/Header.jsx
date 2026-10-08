@@ -22,7 +22,7 @@ export default function Header() {
       <div className="header-container">
         {/* Логотип / Название */}
         <Link to="/" className="header-logo">
-          Synapse API
+          Synapse
         </Link>
 
         {/* Навигация */}

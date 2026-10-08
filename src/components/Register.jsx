@@ -5,19 +5,31 @@ import api from '../api/client';
 export default function Register() {
   const [form, setForm] = useState({ first_name: '', last_name: '', email: '', password: '' });
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setSuccess('');
     setLoading(true);
+    
     try {
+      // 1. Регистрируем пользователя
       await api.post('/auth/register', form);
-      setSuccess('Регистрация успешна! Перенаправляем на вход...');
-      setTimeout(() => navigate('/login'), 2000);
+      
+      // 2. Сразу выполняем вход с теми же данными
+      const loginRes = await api.post('/auth/login', { 
+        email: form.email, 
+        password: form.password 
+      });
+      
+      // 3. Сохраняем данные в localStorage
+      localStorage.setItem('token', loginRes.data.token);
+      localStorage.setItem('role', loginRes.data.role);
+      localStorage.setItem('userName', `${loginRes.data.user.first_name} ${loginRes.data.user.last_name}`);
+      
+      // 4. Перенаправляем на главную (dashboard)
+      navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.error || 'Ошибка регистрации');
     } finally {
@@ -34,7 +46,6 @@ export default function Register() {
       </div>
       
       {error && <div className="alert alert-error">{error}</div>}
-      {success && <div className="alert alert-success">{success}</div>}
       
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -51,7 +62,7 @@ export default function Register() {
         </div>
         <div className="form-group">
           <label className="form-label">Пароль</label>
-          <input type="password" className="input" value={form.password} onChange={handleChange('password')} required minLength={8} placeholder="Минимум 8 символов" />
+          <input type="password" className="input" value={form.password} onChange={handleChange('password')} required minLength={6} placeholder="Минимум 6 символов" />
         </div>
         <button type="submit" className="btn btn-primary" disabled={loading}>
           {loading ? 'Регистрация...' : 'Зарегистрироваться'}
