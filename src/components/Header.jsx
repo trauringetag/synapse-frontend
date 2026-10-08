@@ -63,8 +63,14 @@ export default function Header() {
             </>
           ) : (
             <>
-              <Link 
-                to="/profile" 
+              {role === 'admin' && (
+                <Link to="/dashboard" className={`nav-link ${isActive('/dashboard') ? 'active' : ''}`}>
+                  Панель администратора
+                </Link>
+              )}
+
+              <Link
+                to="/profile"
                 className={`user-info-link ${isActive('/profile') ? 'active' : ''}`}
               >
                 <div className="user-info">
@@ -72,12 +78,6 @@ export default function Header() {
                   <span className={`badge badge-${role}`}>{role}</span>
                 </div>
               </Link>
-
-              {role === 'admin' && (
-                <Link to="/dashboard" className={`nav-link ${isActive('/dashboard') ? 'active' : ''}`}>
-                  Панель администратора
-                </Link>
-              )}
 
               <button onClick={handleLogout} className="btn btn-secondary btn-sm">
                 Выйти
