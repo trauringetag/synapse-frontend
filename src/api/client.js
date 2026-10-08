@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-// Читаем URL из переменной окружения Vite
-// Если переменная не задана — используем localhost:8080 как fallback
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 const api = axios.create({
@@ -25,10 +23,20 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response) {
+      // Если получили 401 (Unauthorized)
       if (error.response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('role');
-        window.location.href = '/login';
+        // Проверяем, НЕ является ли это запросом на логин или регистрацию
+        const isAuthRequest = 
+          error.config.url.includes('/auth/login') || 
+          error.config.url.includes('/auth/register') ||
+          error.config.url.includes('/auth/register-admin');
+
+        // Перенаправляем на логин ТОЛЬКО если это не попытка входа, 
+        // а например, запрос данных с истекшим токеном
+        if (!isAuthRequest) {
+          localStorage.clear();
+          window.location.href = '/login';
+        }
       }
     }
     return Promise.reject(error);

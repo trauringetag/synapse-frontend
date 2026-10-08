@@ -9,28 +9,32 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError('');
-  setLoading(true);
-  
-  try {
-    const res = await api.post('/auth/login', { email, password });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(''); // Очищаем ошибку только при новой попытке входа
+    setLoading(true);
     
-    localStorage.clear();
-    
-    localStorage.setItem('token', res.data.token);
-    localStorage.setItem('role', res.data.role);
-    localStorage.setItem('userId', res.data.user.id);
-    localStorage.setItem('userName', `${res.data.user.first_name} ${res.data.user.last_name}`);
-    
-    navigate('/profile');
-  } catch (err) {
-    setError(err.response?.data?.error || 'Ошибка входа');
-  } finally {
-    setLoading(false);
-  }
-};
+    try {
+      const res = await api.post('/auth/login', { email, password });
+      
+      // Очищаем старые данные перед записью новых
+      localStorage.clear();
+      
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('role', res.data.role);
+      localStorage.setItem('userId', res.data.user.id);
+      localStorage.setItem('userName', `${res.data.user.first_name} ${res.data.user.last_name}`);
+      
+      navigate('/profile');
+    } catch (err) {
+      // Показываем ошибку и НЕ очищаем форму
+      const errorMessage = err.response?.data?.error || 'Ошибка входа. Проверьте email и пароль';
+      setError(errorMessage);
+      // Важно: НЕ сбрасываем email и password, чтобы пользователь не вводил заново
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="card">
@@ -39,6 +43,7 @@ const handleSubmit = async (e) => {
         <p>Введите свои данные для доступа к аккаунту</p>
       </div>
       
+      {/* Ошибка отображается и не исчезает */}
       {error && <div className="alert alert-error">{error}</div>}
       
       <form onSubmit={handleSubmit}>
@@ -51,6 +56,7 @@ const handleSubmit = async (e) => {
             onChange={(e) => setEmail(e.target.value)}
             required
             placeholder="name@example.com"
+            autoComplete="email"
           />
         </div>
         <div className="form-group">
@@ -62,6 +68,7 @@ const handleSubmit = async (e) => {
             onChange={(e) => setPassword(e.target.value)}
             required
             placeholder="••••••••"
+            autoComplete="current-password"
           />
         </div>
         <button type="submit" className="btn btn-primary" disabled={loading}>
