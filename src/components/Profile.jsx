@@ -44,18 +44,16 @@ export default function Profile() {
             {initials}
           </div>
           <div>
-            <CardTitle className="text-2xl">{userData.first_name} {userData.last_name}</CardTitle>
+            <CardTitle className="text-2xl">{userData.first_name} {userData.last_name} (ID: {userData.id})</CardTitle>
             <Badge variant={userData.role === 'admin' ? 'admin' : 'user'} className="mt-2">{userData.role}</Badge>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
+          <div className="rounded-lg">
+            <span className="col-span-2 font-semibold">Email:</span>
+          </div>
           <div className="rounded-lg bg-muted p-4">
-            <div className="grid grid-cols-3 gap-4 text-sm">
-              <span className="font-medium text-muted-foreground">Email</span>
-              <span className="col-span-2 font-semibold">{userData.email}</span>
-              <span className="font-medium text-muted-foreground">ID в системе</span>
-              <span className="col-span-2 font-semibold">#{userData.id}</span>
-            </div>
+            <span className="col-span-2 font-semibold">{userData.email}</span>
           </div>
         </CardContent>
       </Card>
