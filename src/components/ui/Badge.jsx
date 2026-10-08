@@ -8,6 +8,6 @@ export function Badge({ className, variant = "default", ...props }) {
     user: "border-transparent bg-blue-500/20 text-blue-700 dark:text-blue-300 border border-blue-500/30",
   };
   return (
-    <div className={cn("inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors", variants[variant] || variants.default, className)} {...props} />
+    <div className={cn("inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold", variants[variant] || variants.default, className)} {...props} />
   );
 }

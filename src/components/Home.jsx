@@ -26,7 +26,7 @@ export default function Home() {
       </div>
       <div className="mt-20 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {features.map((f, i) => (
-          <div key={i} className="rounded-xl border bg-card p-6 text-card-foreground shadow-sm transition-all hover:shadow-md">
+          <div key={i} className="rounded-xl border bg-card p-6 text-card-foreground shadow-sm hover:shadow-md">
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">{f.icon}</div>
             <h3 className="mb-2 text-lg font-semibold">{f.title}</h3>
             <p className="text-sm text-muted-foreground">{f.desc}</p>

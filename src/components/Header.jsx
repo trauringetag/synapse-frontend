@@ -30,12 +30,12 @@ export default function Header() {
 
   const NavLinks = ({ mobile = false }) => (
     <>
-      <Link to="/" className={cn("text-sm font-medium transition-colors hover:text-primary", isActive('/') ? "text-primary" : "text-muted-foreground", mobile && "block py-2")} onClick={() => setIsMobileMenuOpen(false)}>
+      <Link to="/" className={cn("text-sm font-medium hover:text-primary", isActive('/') ? "text-primary" : "text-muted-foreground", mobile && "block py-2")} onClick={() => setIsMobileMenuOpen(false)}>
         Главная
       </Link>
       {!token ? (
         <>
-          <Link to="/login" className={cn("text-sm font-medium transition-colors hover:text-primary", isActive('/login') ? "text-primary" : "text-muted-foreground", mobile && "block py-2")} onClick={() => setIsMobileMenuOpen(false)}>
+          <Link to="/login" className={cn("text-sm font-medium hover:text-primary", isActive('/login') ? "text-primary" : "text-muted-foreground", mobile && "block py-2")} onClick={() => setIsMobileMenuOpen(false)}>
             Войти
           </Link>
           <Link to="/register" onClick={() => setIsMobileMenuOpen(false)}>
@@ -45,7 +45,7 @@ export default function Header() {
       ) : (
         <>
           {role === 'admin' && (
-            <Link to="/dashboard" className={cn("text-sm font-medium transition-colors hover:text-primary", isActive('/dashboard') ? "text-primary" : "text-muted-foreground", mobile && "block py-2")} onClick={() => setIsMobileMenuOpen(false)}>
+            <Link to="/dashboard" className={cn("text-sm font-medium hover:text-primary", isActive('/dashboard') ? "text-primary" : "text-muted-foreground", mobile && "block py-2")} onClick={() => setIsMobileMenuOpen(false)}>
               Админ-панель
             </Link>
           )}

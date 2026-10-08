@@ -53,7 +53,7 @@ export default function Dashboard() {
               </thead>
               <tbody>
                 {usersList.map((user) => (
-                  <tr key={user.id} className="border-b transition-colors hover:bg-muted/50">
+                  <tr key={user.id} className="border-b hover:bg-muted/50">
                     <td className="px-4 py-3">#{user.id}</td>
                     <td className="px-4 py-3 font-medium">{user.first_name}</td>
                     <td className="px-4 py-3">{user.last_name}</td>
