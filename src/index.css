@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* Светлая тема (базовая, чистая как у Vite) */
+  /* Светлая тема */
   --color-bg: #fafafa;
   --color-bg-secondary: #f4f4f5;
   --color-surface: #ffffff;
@@ -11,7 +11,6 @@
   --color-primary-light: #a78bfa;
   --color-primary-dark: #7c3aed;
   --color-primary-glow: rgba(139, 92, 246, 0.25);
-  
   --color-accent: #646cff;
   
   --color-text-main: #18181b;
@@ -44,18 +43,16 @@
 }
 
 :root.dark {
-  /* Темная тема (глубокая, как у Vite и PurpleSchool) */
+  /* Темная тема */
   --color-bg: #0a0a0c;
   --color-bg-secondary: #131316;
   --color-surface: rgba(255, 255, 255, 0.03);
   --color-surface-hover: rgba(255, 255, 255, 0.06);
-  
   --color-primary-glow: rgba(139, 92, 246, 0.4);
   
   --color-text-main: #ffffff;
   --color-text-secondary: #a1a1aa;
   --color-text-muted: #71717a;
-  
   --color-border: rgba(255, 255, 255, 0.08);
   
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -65,6 +62,7 @@
   --gradient-surface: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
 }
 
+/* --- Базовые сбросы --- */
 * {
   margin: 0;
   padding: 0;
@@ -107,13 +105,18 @@ body {
   align-items: center;
 }
 
-.header-logo {
-  font-size: 1.5rem;
-  font-weight: 800;
+/* Группировка градиентного текста */
+.header-logo,
+.home-title {
   background: var(--gradient-text);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.header-logo {
+  font-size: 1.5rem;
+  font-weight: 800;
   text-decoration: none;
   letter-spacing: -0.02em;
   transition: opacity 0.2s;
@@ -150,12 +153,21 @@ body {
   transition: width 0.3s ease;
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover, 
+.nav-link.active {
   color: var(--color-text-main);
 }
 
-.nav-link:hover::after, .nav-link.active::after {
+.nav-link:hover::after, 
+.nav-link.active::after {
   width: 100%;
+}
+
+/* --- Карточка пользователя в шапке (Объединенная и оптимизированная) --- */
+.user-info-link {
+  text-decoration: none !important;
+  color: inherit;
+  display: inline-block;
 }
 
 .user-info {
@@ -166,19 +178,39 @@ body {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
-  transition: all 0.2s;
+  transition: all 0.25s ease;
+  cursor: pointer;
 }
 
 .user-info:hover {
   border-color: var(--color-border-hover);
 }
 
+.user-info:active {
+  transform: translateY(-1px);
+}
+
+.user-info-link.active .user-info,
+.user-info.active {
+  border-color: var(--color-primary);
+}
+
+/* Принудительное удаление подчеркивания внутри user-info */
+.user-info .user-name,
+.user-info .badge,
+.user-info-link {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
 .user-name {
   font-weight: 600;
   color: var(--color-text-main);
   font-size: 0.875rem;
+  line-height: 1;
 }
 
+/* --- Переключатель темы --- */
 .theme-toggle {
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
@@ -192,7 +224,7 @@ body {
   transition: all 0.2s;
   color: var(--color-text-main);
   font-size: 1.25rem;
-  line-height: 0; /* Убираем высоту строки для точного центрирования */
+  line-height: 0;
   padding: 0;
 }
 
@@ -201,7 +233,6 @@ body {
   background: var(--color-primary-glow);
 }
 
-/* Дополнительная фиксация для иконки внутри кнопки */
 .theme-toggle span {
   display: block;
   line-height: 1;
@@ -223,7 +254,6 @@ body {
   gap: 0.5rem;
 }
 
-/* Кнопки внутри карточек на всю ширину для удобства */
 .card .btn {
   width: 100%;
   margin-top: 0.5rem;
@@ -283,6 +313,27 @@ body {
   padding: 6rem 2rem 4rem;
 }
 
+.card,
+.user-profile-card,
+.home-cta {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Группировка общей градиентной линии сверху */
+.card::before,
+.user-profile-card::before,
+.home-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  opacity: 0.5;
+}
+
 .card {
   background: var(--gradient-surface);
   border: 1px solid var(--color-border);
@@ -293,19 +344,6 @@ body {
   margin: 4rem auto;
   box-shadow: var(--shadow-lg);
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
-  opacity: 0.5;
 }
 
 .card:hover {
@@ -441,10 +479,6 @@ body {
 .home-title {
   font-size: 4rem;
   font-weight: 800;
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   margin-bottom: 1.5rem;
   line-height: 1.1;
   letter-spacing: -0.03em;
@@ -512,18 +546,6 @@ body {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
-  position: relative;
-  overflow: hidden;
-}
-
-.home-cta::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
 }
 
 .home-cta p:first-child {
@@ -617,7 +639,7 @@ tr:hover td {
   border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
-/* --- Карточка пользователя --- */
+/* --- Карточка пользователя (Профиль) --- */
 .user-profile-card {
   background: var(--gradient-surface);
   border: 1px solid var(--color-border);
@@ -627,18 +649,6 @@ tr:hover td {
   margin: 0 auto;
   padding: 3rem;
   text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.user-profile-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
 }
 
 .user-avatar {
@@ -805,7 +815,7 @@ tr:hover td {
   min-width: 140px;
 }
 
-/* Адаптивность */
+/* --- Адаптивность --- */
 @media (max-width: 768px) {
   .header-container {
     flex-direction: column;
@@ -859,51 +869,4 @@ tr:hover td {
   .modal-content {
     padding: 2rem 1.5rem;
   }
-}
-
-/* --- Карточка пользователя в шапке --- */
-
-/* Ссылка-обертка (чтобы убрать стандартные стили ссылок) */
-.user-info-link {
-  text-decoration: none !important;
-  color: inherit;
-  display: inline-block;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem 1rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  transition: all 0.25s ease;
-  cursor: pointer;
-}
-
-/* Принудительно убираем подчеркивание у всех элементов внутри */
-.user-info .user-name,
-.user-info .badge,
-.user-info-link {
-  text-decoration: none !important;
-  border-bottom: none !important;
-}
-
-.user-info:hover {
-  border-color: var(--color-border-hover);
-  transform: translateY(-1px);
-}
-
-/* Активное состояние (когда мы на странице /profile) */
-.user-info-link.active .user-info,
-.user-info.active {
-  border-color: var(--color-primary);
-}
-
-.user-name {
-  font-weight: 600;
-  color: var(--color-text-main);
-  font-size: 0.875rem;
-  line-height: 1;
 }
