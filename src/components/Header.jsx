@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
+
 import { Button } from './ui/Button';
 import { Badge } from './ui/Badge';
 import { cn } from './ui/Button';
 
 export default function Header() {
+
   const location = useLocation();
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const role = localStorage.getItem('role');
   const userName = localStorage.getItem('userName');
-  
+
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -95,4 +97,5 @@ export default function Header() {
       </div>
     </header>
   );
+
 }

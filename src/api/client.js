@@ -9,7 +9,7 @@ const api = axios.create({
   }
 });
 
-// Перехватчик запросов: добавляем JWT токен
+// Перехватчик запросов: JWT токен
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -26,8 +26,8 @@ api.interceptors.response.use(
       // Если получили 401 (Unauthorized)
       if (error.response.status === 401) {
         // Проверяем, НЕ является ли это запросом на логин или регистрацию
-        const isAuthRequest = 
-          error.config.url.includes('/auth/login') || 
+        const isAuthRequest =
+          error.config.url.includes('/auth/login') ||
           error.config.url.includes('/auth/register') ||
           error.config.url.includes('/auth/register-admin');
 

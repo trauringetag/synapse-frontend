@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Shield, Users, Zap, Container } from 'lucide-react';
+
 import { Button } from './ui/Button';
 
 export default function Home() {
+
   const features = [
     { icon: <Shield className="h-8 w-8 text-primary" />, title: 'JWT-аутентификация', desc: 'Безопасные токены с автоматическим обновлением и защитой от несанкционированного доступа' },
     { icon: <Users className="h-8 w-8 text-primary" />, title: 'Ролевая модель', desc: 'Разграничение прав между администраторами и обычными пользователями' },
@@ -35,4 +37,5 @@ export default function Home() {
       </div>
     </div>
   );
+
 }

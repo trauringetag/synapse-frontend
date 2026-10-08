@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
-import { Button } from './ui/Button';
 import { X, AlertTriangle, Info, CheckCircle } from 'lucide-react';
 
+import { Button } from './ui/Button';
+
 export default function Modal({ isOpen, type = 'confirm', title, message, onConfirm, onCancel, variant = 'danger' }) {
+
   useEffect(() => {
     const handleEsc = (e) => { if (e.key === 'Escape' && isOpen) onCancel(); };
     document.addEventListener('keydown', handleEsc);
@@ -45,4 +47,5 @@ export default function Modal({ isOpen, type = 'confirm', title, message, onConf
       </div>
     </div>
   );
+
 }

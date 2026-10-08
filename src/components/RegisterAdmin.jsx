@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+
 import api from '../api/client';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/Card';
 
 export default function RegisterAdmin() {
+
   const [form, setForm] = useState({ first_name: '', last_name: '', email: '', password: '' });
   const [adminSecret, setAdminSecret] = useState('');
   const [error, setError] = useState('');
@@ -63,4 +65,5 @@ export default function RegisterAdmin() {
       </Card>
     </div>
   );
+
 }

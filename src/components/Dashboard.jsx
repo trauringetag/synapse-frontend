@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
+
 import api from '../api/client';
 import Modal from './Modal';
 import { Button } from './ui/Button';
@@ -7,8 +8,10 @@ import { Badge } from './ui/Badge';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 
 export default function Dashboard() {
+
   const navigate = useNavigate();
   const role = localStorage.getItem('role');
+
   if (role !== 'admin') return <Navigate to="/profile" replace />;
 
   const [usersList, setUsersList] = useState([]);
@@ -20,6 +23,7 @@ export default function Dashboard() {
   }, []);
 
   const handleDelete = async () => {
+
     try {
       await api.delete(`/users/${modalState.userId}`);
       setUsersList(prev => prev.filter(u => u.id !== modalState.userId));
@@ -28,6 +32,7 @@ export default function Dashboard() {
       const msg = err.response?.data?.error || 'Ошибка удаления';
       setModalState({ isOpen: true, type: 'alert', variant: msg.includes('сам себя') ? 'info' : 'danger', title: msg.includes('сам себя') ? 'Невозможно удалить' : 'Ошибка', message: msg, userId: null });
     }
+
   };
 
   if (loading) return <div className="container mx-auto flex min-h-[50vh] items-center justify-center">Загрузка...</div>;

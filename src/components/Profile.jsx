@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import api from '../api/client';
 import { Badge } from './ui/Badge';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 
 export default function Profile() {
+
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -59,4 +61,5 @@ export default function Profile() {
       </Card>
     </div>
   );
+
 }
