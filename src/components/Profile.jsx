@@ -44,7 +44,7 @@ export default function Profile() {
             {initials}
           </div>
           <div>
-            <CardTitle className="text-2xl">{userData.first_name} {userData.last_name} (ID: {userData.id})</CardTitle>
+            <CardTitle className="text-2xl">{userData.first_name} {userData.last_name}</CardTitle>
             <Badge variant={userData.role === 'admin' ? 'admin' : 'user'} className="mt-2">{userData.role}</Badge>
           </div>
         </CardHeader>
