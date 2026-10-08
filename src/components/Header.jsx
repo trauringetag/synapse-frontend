@@ -48,11 +48,12 @@ export default function Header() {
             <span>{theme === 'light' ? '🌙' : '☀️'}</span>
           </button>
 
+          <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
+            Главная
+          </Link>
+
           {!token ? (
             <>
-              <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
-                Главная
-              </Link>
               <Link to="/login" className={`nav-link ${isActive('/login') ? 'active' : ''}`}>
                 Войти
               </Link>
@@ -62,7 +63,10 @@ export default function Header() {
             </>
           ) : (
             <>
-              <Link to="/profile" className="nav-link">
+              <Link 
+                to="/profile" 
+                className={`user-info-link ${isActive('/profile') ? 'active' : ''}`}
+              >
                 <div className="user-info">
                   <span className="user-name">{userName || 'Пользователь'}</span>
                   <span className={`badge badge-${role}`}>{role}</span>
