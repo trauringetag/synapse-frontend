@@ -28,12 +28,10 @@ export default function Header() {
             </>
           ) : (
             <>
-              {/* 👇 Ссылка на Профиль для ВСЕХ авторизованных */}
               <Link to="/profile" className={`nav-link ${isActive('/profile') ? 'active' : ''}`}>
                 Профиль
               </Link>
 
-              {/* 👇 Ссылка на Dashboard ТОЛЬКО для админов */}
               {role === 'admin' && (
                 <Link to="/dashboard" className={`nav-link ${isActive('/dashboard') ? 'active' : ''}`}>
                   Панель администратора
