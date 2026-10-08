@@ -32,7 +32,7 @@ export default function RegisterAdmin() {
       localStorage.setItem('token', loginRes.data.token);
       localStorage.setItem('role', loginRes.data.role);
       localStorage.setItem('userId', loginRes.data.user.id);
-      localStorage.setItem('userName', `${loginRes.data.user.first_name} ${loginRes.data.user.last_name}`);
+      localStorage.setItem('userName', `${loginRes.data.user.first_name}`);
 
       navigate('/profile');
     } catch (err) {
