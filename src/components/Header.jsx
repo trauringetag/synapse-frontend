@@ -7,7 +7,7 @@ export default function Header() {
   const token = localStorage.getItem('token');
   const role = localStorage.getItem('role');
   const userName = localStorage.getItem('userName');
-  
+
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('theme') || 'light';
   });
@@ -36,10 +36,18 @@ export default function Header() {
     <header className="site-header">
       <div className="header-container">
         <Link to="/" className="header-logo">
-          Synapse API
+          Synapse
         </Link>
 
         <nav className="header-nav">
+          <button
+            onClick={toggleTheme}
+            className="theme-toggle"
+            title={theme === 'light' ? 'Темная тема' : 'Светлая тема'}
+          >
+            <span>{theme === 'light' ? '🌙' : '☀️'}</span>
+          </button>
+
           {!token ? (
             <>
               <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
@@ -54,35 +62,24 @@ export default function Header() {
             </>
           ) : (
             <>
-              <Link to="/profile" className={`nav-link ${isActive('/profile') ? 'active' : ''}`}>
-                Профиль
+              <Link to="/profile" className="nav-link">
+                <div className="user-info">
+                  <span className="user-name">{userName || 'Пользователь'}</span>
+                  <span className={`badge badge-${role}`}>{role}</span>
+                </div>
               </Link>
-              
+
               {role === 'admin' && (
                 <Link to="/dashboard" className={`nav-link ${isActive('/dashboard') ? 'active' : ''}`}>
                   Панель администратора
                 </Link>
               )}
 
-              <div className="user-info">
-                <span className="user-name">{userName || 'Пользователь'}</span>
-                <span className={`badge badge-${role}`}>{role}</span>
-              </div>
-              
               <button onClick={handleLogout} className="btn btn-secondary btn-sm">
                 Выйти
               </button>
             </>
           )}
-          
-          {/* Переключатель темы */}
-          <button 
-            onClick={toggleTheme} 
-            className="theme-toggle"
-            title={theme === 'light' ? 'Темная тема' : 'Светлая тема'}
-          >
-            {theme === 'light' ? '🌙' : '☀️'}
-          </button>
         </nav>
       </div>
     </header>

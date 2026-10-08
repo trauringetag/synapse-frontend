@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className="home-container">
+    <div className="container">
       <div className="home-content">
         <h1 className="home-title">
           Добро пожаловать в <span className="text-primary">Synapse</span>
@@ -13,25 +13,21 @@ export default function Home() {
 
         <div className="features-grid">
           <div className="feature-card">
-            <div className="feature-icon">🔐</div>
             <h3>JWT-аутентификация</h3>
             <p>Безопасные токены с автоматическим обновлением и защитой от несанкционированного доступа</p>
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon">👥</div>
             <h3>Ролевая модель</h3>
             <p>Разграничение прав между администраторами и обычными пользователями</p>
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon">⚡</div>
             <h3>Высокая производительность</h3>
             <p>Go-бэкенд с PostgreSQL обеспечивает молниеносную скорость отклика</p>
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon"></div>
             <h3>Docker-контейнеризация</h3>
             <p>Простое развертывание и масштабирование в любой среде</p>
           </div>
