@@ -1,95 +1,62 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
+import { Badge } from './ui/Badge';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 
 export default function Profile() {
   const [userData, setUserData] = useState(null);
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  
   const role = localStorage.getItem('role');
   const userId = parseInt(localStorage.getItem('userId'));
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    // 👇 Если нет токена — редирект на логин
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-    
-    fetchProfileData();
-  }, [token, userId]); // 👈 Перезагружаем данные при смене токена или userId
-
-  const fetchProfileData = async () => {
-    try {
-      const res = await api.get('/users');
-      
-      let currentUser;
-      
-      // Если это админ, бэкенд вернет массив. Нам нужно найти в нем себя.
-      if (role === 'admin' && Array.isArray(res.data)) {
-        currentUser = res.data.find(u => u.id === userId);
-        if (!currentUser) {
-          // 👇 Если не нашли пользователя с таким ID — очищаем данные и редирект
-          localStorage.clear();
-          navigate('/login');
-          return;
-        }
-      } else {
-        // Если обычный пользователь, бэкенд вернет объект
-        currentUser = res.data;
-        // 👇 Проверяем, что ID совпадает
-        if (currentUser.id !== userId) {
-          localStorage.clear();
-          navigate('/login');
-          return;
-        }
+    if (!token) { navigate('/login'); return; }
+    const fetchProfileData = async () => {
+      try {
+        const res = await api.get('/users');
+        let currentUser = role === 'admin' && Array.isArray(res.data) ? res.data.find(u => u.id === userId) : res.data;
+        if (!currentUser || currentUser.id !== userId) { localStorage.clear(); navigate('/login'); return; }
+        setUserData(currentUser);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
-      
-      setUserData(currentUser);
-    } catch (err) {
-      setError('Не удалось загрузить данные профиля');
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+    fetchProfileData();
+  }, [token, userId, role, navigate]);
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate('/login');
-  };
-
-  if (loading) return <div className="container" style={{ textAlign: 'center', marginTop: '4rem' }}>Загрузка...</div>;
-  if (!userData) return null; // Уже обработано в fetchProfileData
+  if (loading) return <div className="container mx-auto flex min-h-[50vh] items-center justify-center">Загрузка...</div>;
+  if (!userData) return null;
 
   const initials = `${userData.first_name[0]}${userData.last_name[0]}`.toUpperCase();
 
   return (
-    <div className="container">
-      <div className="dashboard-header">
-        <h2>Личный кабинет</h2>
-      </div>
-      
-      {error && <div className="alert alert-error">{error}</div>}
-
-      <div className="user-profile-card">
-        <div className="user-avatar">{initials}</div>
-        <h3>{userData.first_name} {userData.last_name}</h3>
-        <span className={`badge badge-${userData.role}`} style={{ marginTop: '0.5rem' }}>{userData.role}</span>
-        
-        <div className="user-details">
-          <div className="detail-row">
-            <span className="detail-label">Email</span>
-            <span className="detail-value">{userData.email}</span>
+    <div className="container mx-auto max-w-2xl px-4 py-8">
+      <Card>
+        <CardHeader className="flex flex-row items-center gap-4">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-2xl font-bold text-primary">
+            {initials}
           </div>
-          <div className="detail-row">
-            <span className="detail-label">ID в системе</span>
-            <span className="detail-value">#{userData.id}</span>
+          <div>
+            <CardTitle className="text-2xl">{userData.first_name} {userData.last_name}</CardTitle>
+            <Badge variant={userData.role === 'admin' ? 'admin' : 'user'} className="mt-2">{userData.role}</Badge>
           </div>
-        </div>
-      </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="rounded-lg bg-muted p-4">
+            <div className="grid grid-cols-3 gap-4 text-sm">
+              <span className="font-medium text-muted-foreground">Email</span>
+              <span className="col-span-2 font-semibold">{userData.email}</span>
+              <span className="font-medium text-muted-foreground">ID в системе</span>
+              <span className="col-span-2 font-semibold">#{userData.id}</span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
