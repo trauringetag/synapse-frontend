@@ -5,70 +5,46 @@ export default function Header() {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const role = localStorage.getItem('role');
-  const userName = localStorage.getItem('userName'); // Будем сохранять имя при логине
+  const userName = localStorage.getItem('userName');
 
-  // Определяем активную ссылку для подсветки
   const isActive = (path) => location.pathname === path;
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    localStorage.removeItem('userName');
+    localStorage.clear();
     navigate('/login');
   };
 
   return (
     <header className="site-header">
       <div className="header-container">
-        {/* Логотип / Название */}
-        <Link to="/" className="header-logo">
-          Synapse
-        </Link>
+        <Link to="/" className="header-logo">Synapse API</Link>
 
-        {/* Навигация */}
         <nav className="header-nav">
           {!token ? (
-            // Если НЕ авторизован — показываем ссылки на вход/регистрацию
             <>
-              <Link 
-                to="/" 
-                className={`nav-link ${isActive('/') ? 'active' : ''}`}
-              >
-                Главная
-              </Link>
-              <Link 
-                to="/login" 
-                className={`nav-link ${isActive('/login') ? 'active' : ''}`}
-              >
-                Войти
-              </Link>
-              <Link 
-                to="/register" 
-                className={`nav-link ${isActive('/register') ? 'active' : ''}`}
-              >
-                Регистрация
-              </Link>
+              <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>Главная</Link>
+              <Link to="/login" className={`nav-link ${isActive('/login') ? 'active' : ''}`}>Войти</Link>
+              <Link to="/register" className={`nav-link ${isActive('/register') ? 'active' : ''}`}>Регистрация</Link>
             </>
           ) : (
-            // Если авторизован — показываем имя и кнопку выхода
             <>
-              <Link 
-                to="/dashboard" 
-                className={`nav-link ${isActive('/dashboard') ? 'active' : ''}`}
-              >
-                Личный кабинет
+              {/* 👇 Ссылка на Профиль для ВСЕХ авторизованных */}
+              <Link to="/profile" className={`nav-link ${isActive('/profile') ? 'active' : ''}`}>
+                Профиль
               </Link>
+
+              {/* 👇 Ссылка на Dashboard ТОЛЬКО для админов */}
+              {role === 'admin' && (
+                <Link to="/dashboard" className={`nav-link ${isActive('/dashboard') ? 'active' : ''}`}>
+                  Панель администратора
+                </Link>
+              )}
+
               <div className="user-info">
-                <span className="user-name">
-                  {userName || 'Пользователь'}
-                </span>
-                <span className={`badge badge-${role}`}>
-                  {role}
-                </span>
+                <span className="user-name">{userName || 'Пользователь'}</span>
+                <span className={`badge badge-${role}`}>{role}</span>
               </div>
-              <button onClick={handleLogout} className="btn btn-secondary btn-sm">
-                Выйти
-              </button>
+              <button onClick={handleLogout} className="btn btn-secondary btn-sm">Выйти</button>
             </>
           )}
         </nav>

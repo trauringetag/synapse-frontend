@@ -9,25 +9,28 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  setLoading(true);
+  
+  try {
+    const res = await api.post('/auth/login', { email, password });
     
-    try {
-      const res = await api.post('/auth/login', { email, password });
-      
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('role', res.data.role);
-      localStorage.setItem('userName', `${res.data.user.first_name}`);
-      
-      navigate('/dashboard');
-    } catch (err) {
-      setError(err.response?.data?.error || 'Ошибка входа');
-    } finally {
-      setLoading(false);
-    }
-  };
+    localStorage.clear();
+    
+    localStorage.setItem('token', res.data.token);
+    localStorage.setItem('role', res.data.role);
+    localStorage.setItem('userId', res.data.user.id);
+    localStorage.setItem('userName', `${res.data.user.first_name} ${res.data.user.last_name}`);
+    
+    navigate('/profile');
+  } catch (err) {
+    setError(err.response?.data?.error || 'Ошибка входа');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="card">

@@ -23,13 +23,15 @@ export default function Register() {
         password: form.password 
       });
       
+      localStorage.clear();
+      
       // 3. Сохраняем данные в localStorage
       localStorage.setItem('token', loginRes.data.token);
       localStorage.setItem('role', loginRes.data.role);
+      localStorage.setItem('userId', loginRes.data.user.id);
       localStorage.setItem('userName', `${loginRes.data.user.first_name} ${loginRes.data.user.last_name}`);
       
-      // 4. Перенаправляем на главную (dashboard)
-      navigate('/dashboard');
+      navigate('/profile');
     } catch (err) {
       setError(err.response?.data?.error || 'Ошибка регистрации');
     } finally {
