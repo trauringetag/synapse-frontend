@@ -1,4 +1,3 @@
-import * as React from "react";
 import { cn } from "./Button";
 
 export function Badge({ className, variant = "default", ...props }) {

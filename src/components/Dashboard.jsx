@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import api from '../api/client';
 import Modal from './Modal';
@@ -9,7 +9,6 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 
 export default function Dashboard() {
 
-  const navigate = useNavigate();
   const role = localStorage.getItem('role');
 
   if (role !== 'admin') return <Navigate to="/profile" replace />;

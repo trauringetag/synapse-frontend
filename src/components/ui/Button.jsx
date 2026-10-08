@@ -1,10 +1,11 @@
-import * as React from "react";
+import { forwardRef } from "react";
+
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs) { return twMerge(clsx(inputs)); }
 
-export const Button = React.forwardRef(({ className, variant = "default", size = "default", ...props }, ref) => {
+export const Button = forwardRef(({ className, variant = "default", size = "default", ...props }, ref) => {
 
   const variants = {
     default: "bg-primary text-primary-foreground hover:bg-primary/90",
