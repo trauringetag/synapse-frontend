@@ -62,7 +62,7 @@ export default function Register() {
         </div>
         <div className="form-group">
           <label className="form-label">Пароль</label>
-          <input type="password" className="input" value={form.password} onChange={handleChange('password')} required minLength={6} placeholder="Минимум 6 символов" />
+          <input type="password" className="input" value={form.password} onChange={handleChange('password')} required minLength={8} placeholder="Минимум 8 символов" />
         </div>
         <button type="submit" className="btn btn-primary" disabled={loading}>
           {loading ? 'Регистрация...' : 'Зарегистрироваться'}

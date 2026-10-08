@@ -566,3 +566,118 @@ tr:hover td {
     font-size: 1rem;
   }
 }
+
+/* --- Модальное окно подтверждения --- */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: 2rem;
+  max-width: 420px;
+  width: 90%;
+  position: relative;
+  text-align: center;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.modal-close:hover {
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+}
+
+.modal-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: 0.75rem;
+}
+
+.modal-message {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.modal-actions .btn {
+  width: auto;
+  min-width: 120px;
+  padding: 0.625rem 1.5rem;
+}
+
+/* --- Варианты модального окна --- */
+.modal-content.modal-danger .modal-icon {
+  color: var(--color-danger);
+}
+
+.modal-content.modal-info .modal-icon {
+  color: var(--color-primary);
+}
+
+.modal-content.modal-success .modal-icon {
+  color: var(--color-success);
+}
+
+.modal-actions-single {
+  justify-content: center;
+}
+
+.modal-actions-single .btn {
+  min-width: 140px;
+}
