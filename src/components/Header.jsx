@@ -17,7 +17,7 @@ export default function Header() {
   return (
     <header className="site-header">
       <div className="header-container">
-        <Link to="/" className="header-logo">Synapse API</Link>
+        <Link to="/" className="header-logo">Synapse</Link>
 
         <nav className="header-nav">
           {!token ? (
