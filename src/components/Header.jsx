@@ -47,7 +47,7 @@ export default function Header() {
       ) : (
         <>
           {role === 'admin' && (
-            <Link to="/dashboard" className={cn("text-sm font-medium hover:text-primary", isActive('/dashboard') ? "text-primary" : "text-muted-foreground", mobile && "block py-2")} onClick={() => setIsMobileMenuOpen(false)}>
+            <Link to="/admin-panel" className={cn("text-sm font-medium hover:text-primary", isActive('/admin-panel') ? "text-primary" : "text-muted-foreground", mobile && "block py-2")} onClick={() => setIsMobileMenuOpen(false)}>
               Админ-панель
             </Link>
           )}

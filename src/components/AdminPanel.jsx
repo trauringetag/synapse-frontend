@@ -7,7 +7,7 @@ import { Button } from './ui/Button';
 import { Badge } from './ui/Badge';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 
-export default function Dashboard() {
+export default function AdminPanel() {
 
   const role = localStorage.getItem('role');
 

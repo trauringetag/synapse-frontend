@@ -7,7 +7,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import RegisterAdmin from './components/RegisterAdmin';
 import Profile from './components/Profile';
-import Dashboard from './components/Dashboard';
+import AdminPanel from './components/AdminPanel';
 
 function ProtectedRoute({ children }) {
 
@@ -57,9 +57,9 @@ function App() {
             </ProtectedRoute>
           } />
 
-          <Route path="/dashboard" element={
+          <Route path="/admin-panel" element={
             <ProtectedRoute>
-              <Dashboard />
+              <AdminPanel />
             </ProtectedRoute>
           } />
 
